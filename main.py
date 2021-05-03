@@ -16,5 +16,4 @@ serving_size2 = 2
 
 insertFood(food, serving_size, macro)
 insertFood(food2, serving_size2, macro2)
-
 print(saved_items)
