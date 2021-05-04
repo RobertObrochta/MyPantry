@@ -55,7 +55,7 @@ def createMeal(mealName = "Custom Meal", ingredients = {}):
     saved_meals[mealName] = ingr_dict
     return saved_meals
 
-# function to show total macros and additional nutrients of a meal
+# function to show total macros and additional nutrients of a meal COMING NEXT
     
 
 def showDicts():
