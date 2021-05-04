@@ -54,7 +54,6 @@ def showDicts():
         print(item)
 
 
-
 food = "pizza"
 macro = {"fat" : "2g","protein" : 15, "carbohydrates" : '12g'}
 serving_size = 1
