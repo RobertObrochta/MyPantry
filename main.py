@@ -43,6 +43,15 @@ def createMeal(mealName = "Custom Meal", ingredientList = []):
     'compiles each ingredient and adds it to the database'
     pass
     
+def showDicts():
+    print("Your past food items: ")
+    for item in saved_items.keys():
+        print(item)
+    print("\n")
+
+    print("Your meals: ")
+    for item in saved_meals.keys():
+        print(item)
 
 
 
@@ -59,4 +68,4 @@ insertItem(food2, serving_size2, macro2)
 
 createMeal("cheese", ["burger", "pizza"])
 
-print(saved_items)
+showDicts()
