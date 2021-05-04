@@ -3,7 +3,6 @@
 saved_items = {}
 saved_meals = {}
                   
-# this function will take a serving_size of a food and reduce it down to its base form (1). Therefore, will change all of the macro contents and scale them accordingly
 def insertItem(item, serving_size, macronutrients, additional_nutrients = None):
     'creates a new ingredient item'
     if type(macronutrients) != dict:
@@ -34,15 +33,31 @@ def insertItem(item, serving_size, macronutrients, additional_nutrients = None):
         return True
 
 
-# another function will make a meal (of custom name)
-# Meals will be bundled together, separate from the normal ingredients
 
-# ISSUE: Have to provide a way to adjust the amount of ingredients (a.k.a. serving size)
-# ingredientList should be a dict, key is the ingredient and val is the number of servings of that ingredient
-def createMeal(mealName = "Custom Meal", ingredientList = []):
-    'compiles each ingredient and adds it to the database'
-    pass
+def createMeal(mealName = "Custom Meal", ingredients = {}):
+    'create a meal using inserted ingredients'
+
+    ingr_dict = {}
+    for key, amount in ingredients.items():
+        if key not in saved_items.keys():
+            print(f"{key} is not in your past food items. Please register it before adding it to a meal.")
+            return False
+        
+        ingredient_details = saved_items.get(key)
+        ingredient_details[0] = amount
+        for k, macro in ingredient_details[1].items():
+            updated_value = macro * amount
+            ingredient_details[1][k] = updated_value
+        
+        # leave the addtnl_nutrients out of this for now
+        ingr_dict[key] = ingredient_details
+
+    saved_meals[mealName] = ingr_dict
+    return saved_meals
+
+# function to show total macros and additional nutrients of a meal
     
+
 def showDicts():
     print("Your past food items: ")
     for item in saved_items.keys():
@@ -54,18 +69,17 @@ def showDicts():
         print(item)
 
 
-food = "pizza"
-macro = {"fat" : "2g","protein" : 15, "carbohydrates" : '12g'}
-serving_size = 1
 
-food2 = "burger"
-macro2 = {"protein" : "20g", "carbohydrates" : '1g', "sodium" : "125mg"}
-serving_size2 = 2
+# SAMPLE INPUTS BELOW
+# food = "pizza"
+# macro = {"fat" : "2g","protein" : 15, "carbohydrates" : '12g'}
+# serving_size = 1
 
-insertItem(food, serving_size, macro)
-insertItem(food2, serving_size2, macro2)
+# food2 = "burger"
+# macro2 = {"protein" : "20g", "carbohydrates" : '1g', "sodium" : "125mg"}
+# serving_size2 = 2
 
-createMeal("cheese", ["burger", "pizza"])
+# insertItem(food, serving_size, macro)
+# insertItem(food2, serving_size2, macro2)
 
-
-showDicts()
+# createMeal("cheese", {"burger": 2, "pizza": 3})
