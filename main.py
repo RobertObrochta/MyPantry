@@ -9,6 +9,7 @@ saved_meals = {}
 # a daily log of food items and nutrients gathered
 items_eaten_today = {} # which item : how many of them
 nutrients_eaten_today = {} # running total of the nutrients consumed for each day
+   
                   
 def insertItem(item, serving_size, macronutrients, additional_nutrients = None):
     'creates a new ingredient item'
