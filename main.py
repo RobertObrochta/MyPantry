@@ -40,7 +40,6 @@ def insertItem(item, serving_size, macronutrients, additional_nutrients = None):
         return True
 
 
-
 def createMeal(meal_name = "Custom Meal", ingredients = {}):
     'creates a meal using inserted ingredients'
 
@@ -88,22 +87,19 @@ def logMeal(item, amount = 1):
                 for k, macro in total[1].items():
                     updated_value = macro * amount
                     total[1][k] = updated_value
-                
                 temp_dict[item] = total
 
-
-
+################################################## still need to finish this ###############################################################
     '''
     Now do the same thing, but for meals. Then, gather the information and keep a nutrient counter DICTIONARY
     format = {mdy : {"protein" : running_total, "carbs" : running total} }
     '''
-
+############################################################################################################################################
     timestamp = datetime.now()
     dmy = timestamp.day, timestamp.month, timestamp.year
 
     items_eaten_today[dmy] = temp_dict
     return timestamp
-
 
 
 def showDicts():
@@ -114,28 +110,92 @@ def showDicts():
 
     print("Your meals: ")
     for item in saved_meals.keys():
-        print(item)
+        print(item + "\n")
 
 
 
 
 
+'''
+----------------------------------------------------------------------UI Elements below here--------------------------------------------------------------------------
+'''
+# UI element for logging existing meals
+def logIM():
+    while True:
+        item = input("What did you eat today? ")
+        howMuch = float(input(f"How much {item} did you eat today? "))
+        logMeal(item, howMuch)
+        print(items_eaten_today)
+        return True
 
-# SAMPLE INPUTS BELOW
-food = "pizza"
-macro = {"fat" : "2g","protein" : 15, "carbohydrates" : '12g'}
-serving_size = 1
+# UI element for logging new food items
+'''
+FORMAT ===== insertItem(item **str**, serving_size **int or float**, macronutrients **dict**, additional_nutrients = None **dict**):
+'''
+def addItem():
+    while True:
+        item = input("What do you want to add? ")
+        serving_size = float(input(f"How much {item} did you eat today? "))
+        macros = input("Add comma-separated macronutrients: ").split(",") 
+        amount_macros = input("In the same order of your macronutrients, add the corresponding amount: ").split(",")
+        # additional_nutrients = input("Add addtional nutrients with the format -- nutrient:amount. ")
 
-food2 = "burger"
-macro2 = {"protein" : "20g", "carbohydrates" : '1g', "sodium" : "125mg"}
-serving_size2 = 2
+        macros_dict = {}
+        # add the macros
+        for a, m in zip(amount_macros, macros):
+            macros_dict[m] = float(a)
 
-insertItem(food, serving_size, macro)
-insertItem(food2, serving_size2, macro2)
+        insertItem(item, serving_size, macros_dict)
+        print(f"Added {item} to your pantry!")
+        return True
 
-createMeal("cheese", {"burger": 2, "pizza": 3})
 
-# showDicts()
+# UI element for logging new meals
+'''
+FORMAT ===== createMeal(meal_name = "Custom Meal", ingredients = {}):
+'''
+def addMeal():
+    while True:
+        meal_name = input("Enter a meal name: ")
+        ingredient_name = input("Add comma-separated ingredients: ").split(",") 
+        ingredient_amount = input("In the same order of your macronutrients, add the corresponding amount. ").split(",")
+        # additional_nutrients = input("Add addtional nutrients with the format -- nutrient:amount. ")
 
-logMeal('pizza', 3)
-print(items_eaten_today)
+        ingredient_dict = {}
+        # add the ingredients
+        for n, a in zip(ingredient_name, ingredient_amount):
+            ingredient_dict[n.strip()] = float(a)
+
+        createMeal(meal_name, ingredient_dict)
+        print(f"Added {meal_name} to your pantry!")
+        return True
+
+def startUp():
+    print("Welcome to your pantry!")
+
+def menu():
+    print("OPTIONS: Register Item (1), Create Meal (2), Log Item/Meal (3), View All Saved Items (4), Quit (5)")
+    choice = int(input().strip())
+    while choice >= 1 and choice <= 4:
+        if choice == 1:
+            addItem()
+        elif choice == 2:
+            addMeal()
+        elif choice == 3:
+            logIM()
+        elif choice == 4:
+            showDicts()
+        break
+
+    # recursive method to keep the menu showing
+    if choice >= 1 and choice <= 4:
+        menu()
+    else:
+        print("See you!")
+        return False
+
+def main():
+    startUp()
+    menu()
+
+main()
