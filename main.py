@@ -9,8 +9,8 @@ saved_meals = {}
 # a daily log of food items and nutrients gathered
 items_eaten_today = {} # which item : how many of them
 nutrients_eaten_today = {} # running total of the nutrients consumed for each day
-   
-                  
+
+
 def insertItem(item, serving_size, macronutrients, additional_nutrients = None):
     'creates a new ingredient item'
     if type(macronutrients) != dict:
@@ -191,9 +191,12 @@ def menu():
     # recursive method to keep the menu showing
     if choice >= 1 and choice <= 4:
         menu()
-    else:
+    elif choice == 5:
         print("See you!")
         return False
+    else: # wrong choice
+        print("That is not a valid choice.")
+        menu()
 
 def main():
     startUp()
