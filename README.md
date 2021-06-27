@@ -8,3 +8,4 @@
 - [ ] Implement a pie chart that colorfully tracks **macronutrients and calories** in a day (separate file)
 - [ ] Implement a bar graph that shows **macronutrients and calories** per day
 - [ ] Track calories during registering an item
+- [ ] Save information upon quitting the app *within a database*
